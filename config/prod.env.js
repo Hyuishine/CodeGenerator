@@ -2,7 +2,7 @@
  * @Author: 黄宇/hyuishine
  * @Date: 2020-07-11 17:29:40
  * @LastEditors: 黄宇/hyuishine
- * @LastEditTime: 2021-02-24 14:58:05
+ * @LastEditTime: 2021-04-11 16:17:44
  * @Description: 
  * @Email: hyuishine@gmail.com
  * @Company: 3xData
@@ -12,5 +12,5 @@
 module.exports = {
   NODE_ENV: '"production"',
   ENV_CONFIG: '"prod"',
-  BASE_APi: '"/Kite'
+  BASE_APi: '"/codeGenerator'
 }

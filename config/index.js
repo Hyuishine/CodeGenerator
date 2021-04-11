@@ -2,7 +2,7 @@
  * @Author: 黄宇/hyuishine
  * @Date: 2020-05-12 15:17:17
  * @LastEditors: 黄宇/hyuishine
- * @LastEditTime: 2021-03-18 15:23:59
+ * @LastEditTime: 2021-04-11 16:27:26
  * @Description:
  * @Email: hyuishine@gmail.com
  * @Company: 3xDate
@@ -21,12 +21,12 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/Kite': {
-        // target: 'http://localhost:3000/Kite',
-        target: 'http://yapi.3xdata.cn/mock/706/selfTest/',
+      '/yapi': {
+        // target: 'http://localhost:3000/yapi',
+        target: 'http://yapi.3xdata.cn',
         changeOrigin: true, // 是否跨域
         pathRewrite: {
-          '^/Kite': '' // 代理伪装后台地址 使用Kite 即相当于 后台地址
+          '^/yapi': '' // 代理伪装后台地址 使用yapi 即相当于 后台地址
         }
       }
     },
