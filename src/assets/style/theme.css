@@ -1,0 +1,29 @@
+:root {
+  --bgColor-white: #fff;
+  --bgColor-light: #f0f0f0;
+  --bgColor-black: #8b8b8b;
+  --bgColor-HB: #3f3f3f;
+  --color-primary: #90c5e5;
+  --color-success: #90e594;
+  --color-error: #efb0a2;
+  --txtColor-primary: #3f3f3f;
+  --txtColor-regular: #8b8b8b;
+  --txtColor-thin: #a2a994;
+  --txtColor-light: #fff;
+}
+
+/* 改变选中颜色 */
+::selection {
+  background: var(--color-primary);
+  color: var(--txtColor-light);
+}
+
+::-moz-selection {
+  background: var(--color-primary);
+  color: var(--txtColor-light);
+}
+
+::-webkit-selection {
+  background: var(--color-primary);
+  color: var(--txtColor-light);
+}

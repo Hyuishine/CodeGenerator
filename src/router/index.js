@@ -1,0 +1,49 @@
+/*
+ * @Author: 黄宇/hyuishine
+ * @Date: 2020-05-12 15:17:17
+ * @LastEditors: 黄宇/hyuishine
+ * @LastEditTime: 2021-04-11 15:28:38
+ * @Description:
+ * @Email: hyuishine@gmail.com
+ * @Company: 3xDate
+ * @youWant: 路由
+ */
+import Vue from 'vue'
+import Router from 'vue-router'
+// import MetaInfo from 'vue-meta-info'
+// import store from '@/store/index' // 跳转时切换store中的topBar状态
+Vue.use(Router)
+const routes = [
+  {
+    path: '/',
+    redirect: '/index',
+    // meta: {
+    //   requireAuth: true
+    // },
+    component: resolve => require(['@/view/layout'], resolve),
+    children: [
+      {
+        // 错误页
+        path: '/index',
+        name: 'index',
+        meta: {
+          zhName: '导表生成',
+          keyWords: 'excel导表生成',
+          description: 'excel导表生成'
+        },
+        component: resolve => require(['@/view/excelGenerator/index'], resolve)
+      }
+    ]
+  }
+
+]
+const router = new Router({ routes })
+router.beforeEach((to, from, next) => {
+  // 为每个模块修改特定的网站标题
+  document.title = '代码生成 | ' + to.meta.description
+  var self = this.a.app
+  // 进入页面时关闭图片查看器
+  self.$bus.$emit('toggle_imgViewer', { status: false })
+  next()
+})
+export default router

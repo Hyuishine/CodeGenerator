@@ -1,0 +1,4 @@
+/* 解决fluentDesign 图标不随容器自适应bug */
+.ms-icon{
+  font-size: initial !important;
+}
