@@ -2,7 +2,7 @@
  * @Author: 黄宇/hyuishine
  * @Date: 2020-05-12 15:17:17
  * @LastEditors: 黄宇/hyuishine
- * @LastEditTime: 2021-04-11 16:27:26
+ * @LastEditTime: 2021-04-12 17:03:26
  * @Description:
  * @Email: hyuishine@gmail.com
  * @Company: 3xDate
@@ -21,18 +21,18 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/yapi': {
+      '/codeGenerator': {
         // target: 'http://localhost:3000/yapi',
         target: 'http://yapi.3xdata.cn',
         changeOrigin: true, // 是否跨域
         pathRewrite: {
-          '^/yapi': '' // 代理伪装后台地址 使用yapi 即相当于 后台地址
+          '^/codeGenerator': '' // 代理伪装后台地址 使用yapi 即相当于 后台地址
         }
       }
     },
 
     // Various Dev Server settings
-    host: 'localhost', // can be overwritten by process.env.HOST
+    host: '172.16.1.168', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,

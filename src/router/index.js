@@ -2,7 +2,7 @@
  * @Author: 黄宇/hyuishine
  * @Date: 2020-05-12 15:17:17
  * @LastEditors: 黄宇/hyuishine
- * @LastEditTime: 2021-04-11 15:28:38
+ * @LastEditTime: 2021-04-12 16:06:32
  * @Description:
  * @Email: hyuishine@gmail.com
  * @Company: 3xDate
@@ -23,7 +23,7 @@ const routes = [
     component: resolve => require(['@/view/layout'], resolve),
     children: [
       {
-        // 错误页
+        // 导表申城
         path: '/index',
         name: 'index',
         meta: {
@@ -32,6 +32,17 @@ const routes = [
           description: 'excel导表生成'
         },
         component: resolve => require(['@/view/excelGenerator/index'], resolve)
+      },
+      {
+        // yapi生成
+        path: '/yapi',
+        name: 'yapi',
+        meta: {
+          zhName: 'yapi生成',
+          keyWords: 'yapi生成',
+          description: 'yapi生成'
+        },
+        component: resolve => require(['@/view/yapiGenerator/index'], resolve)
       }
     ]
   }
@@ -41,9 +52,6 @@ const router = new Router({ routes })
 router.beforeEach((to, from, next) => {
   // 为每个模块修改特定的网站标题
   document.title = '代码生成 | ' + to.meta.description
-  var self = this.a.app
-  // 进入页面时关闭图片查看器
-  self.$bus.$emit('toggle_imgViewer', { status: false })
   next()
 })
 export default router
