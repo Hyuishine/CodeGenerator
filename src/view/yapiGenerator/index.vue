@@ -2,7 +2,7 @@
  * @Author: 黄宇/hyuishine
  * @Date: 2021-04-12 15:55:33
  * @LastEditors: 黄宇/Hyuishine
- * @LastEditTime: 2021-07-27 14:58:38
+ * @LastEditTime: 2021-07-27 15:15:39
  * @Description:
  * @Email: hyuishine@gmail.com
  * @Company: 3xData
@@ -23,26 +23,38 @@ export default {
       keyArr: ['id', 'remarks', 'name'],
       descriptionArr: ['主键', '备注', '名称'],
       // yapi 标准表单模板
-      formObject: {
+      formTemplate: {
         $schema: 'http://json-schema.org/draft-04/schema#',
         type: 'object',
-        properties: {
-          code: {
-            type: 'number',
+        required: ['code', 'message', 'data'], // 该层级下必反的数据
+        properties: { // 子项数据
+          code: { // 状态码
+            type: 'number', // 类型
+            description: '状态码', // 描述、备注
             mock: {
-              mock: '200'
+              mock: '200' // 写死值
             }
           },
-          message: {
-            type: 'string'
+          message: { // 提示信息
+            type: 'string',
+            mock: {
+              mock: 'success'
+            }
           },
-          data: {
+          data: { // 数据
             type: 'object',
+            required: ['formObject'],
             properties: {
-              // keyArr: { // key值
-              //   type: 'string',
-              //   description: 'descriptionArr' 描述
-              // }
+              formObject: {
+                type: 'object',
+                required: [],
+                properties: {
+                  // keyArr: { // key值
+                  //   type: 'string',
+                  //   description: 'descriptionArr' 描述
+                  // }
+                }
+              }
             }
           }
         }
@@ -63,17 +75,21 @@ export default {
     createProperties () {
       if (this.keyArr.length === this.descriptionArr.length) {
         // 临时存放生成的数据
-        let tempObj = {}
+        let formItem = {}
+        let requiredArr = []
         // 生成表单项，键值-类型-备注
         this.keyArr.forEach((key, i) => {
-          tempObj[key] = {
+          // 创建表单项
+          formItem[key] = {
             type: 'string',
             description: this.descriptionArr[i]
           }
+          // 创建必定返回的表单项
+          requiredArr.push(key)
         })
-        // 将生成的表单项数据，插入到yapi表单模板中
-        this.formObject.properties.data.properties = tempObj
-        console.log(this.formObject)
+        // 将生成的 表单项数据 和 必定要反的表单项数据 插入到yapi表单模板中,
+        this.formTemplate.properties.data.properties.formObject.properties = formItem
+        this.formTemplate.properties.data.properties.formObject.required = requiredArr
       }
     }
   }
