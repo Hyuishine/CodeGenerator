@@ -1,0 +1,67 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+        "code": {
+            "type": "string",
+            "description": "状态码",
+            "mock": {
+                "mock": "200"
+            }
+        },
+        "message": {
+            "type": "string",
+            "description": "状态码",
+            "mock": {
+                "mock": "success"
+            }
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "pageNo": {
+                    "type": "number",
+                    "description": "页码",
+                    "mock": {
+                        "mock": "1"
+                    }
+                },
+                "count": {
+                    "type": "number",
+                    "description": "数据总数",
+                    "mock": {
+                        "mock": "15"
+                    }
+                },
+                "pageSize": {
+                    "type": "number",
+                    "description": "数据总数",
+                    "mock": {
+                        "mock": "15"
+                    }
+                },
+                "rows": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {},
+                        "required": []
+                    },
+                    "minItems": 1,
+                    "maxItems": 10
+                }
+            },
+            "required": [
+                "pageNo",
+                "count",
+                "pageSize",
+                "rows"
+            ]
+        }
+    },
+    "required": [
+        "code",
+        "message",
+        "data"
+    ]
+}

@@ -1,0 +1,137 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+        "code": {
+            "type": "number",
+            "mock": {
+                "mock": "200"
+            }
+        },
+        "message": {
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "pageNo": {
+                    "type": "number"
+                },
+                "count": {
+                    "type": "number"
+                },
+                "pageSize": {
+                    "type": "number"
+                },
+                "rows": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string",
+                                "description": "主键",
+                                "mock": {
+                                    "mock": "@id"
+                                }
+                            },
+                            "remarks": {
+                                "type": "string",
+                                "description": "备注",
+                                "mock": {
+                                    "mock": "@paragraph"
+                                }
+                            },
+                            "createBy": {
+                                "type": "string",
+                                "mock": {
+                                    "mock": "@cname"
+                                }
+                            },
+                            "createDate": {
+                                "type": "string",
+                                "mock": {
+                                    "mock": "@datetime"
+                                }
+                            },
+                            "updateBy": {
+                                "type": "string",
+                                "mock": {
+                                    "mock": "@cname"
+                                }
+                            },
+                            "updateDate": {
+                                "type": "string",
+                                "mock": {
+                                    "mock": "@datetime"
+                                }
+                            },
+                            "delFlag": {
+                                "type": "number",
+                                "mock": {
+                                    "mock": "@int(0,1)"
+                                }
+                            },
+                            "stationId": {
+                                "type": "string",
+                                "description": "站点id",
+                                "mock": {
+                                    "mock": "@id"
+                                }
+                            },
+                            "name": {
+                                "type": "string",
+                                "description": "公墓名称"
+                            },
+                            "latitudeLongitude": {
+                                "type": "string",
+                                "description": "经纬度"
+                            },
+                            "startDate": {
+                                "type": "string",
+                                "mock": {
+                                    "mock": "@datetime"
+                                },
+                                "description": "用火高峰期（起）"
+                            },
+                            "endDate": {
+                                "type": "string",
+                                "description": "用火高峰期（止）",
+                                "mock": {
+                                    "mock": "@datetime"
+                                }
+                            }
+                        },
+                        "required": [
+                            "id",
+                            "remarks",
+                            "createBy",
+                            "createDate",
+                            "updateBy",
+                            "updateDate",
+                            "delFlag",
+                            "stationId",
+                            "name",
+                            "latitudeLongitude",
+                            "endDate",
+                            "startDate"
+                        ]
+                    },
+                    "minItems": 1,
+                    "maxItems": 10
+                }
+            },
+            "required": [
+                "pageNo",
+                "count",
+                "pageSize",
+                "rows"
+            ]
+        }
+    },
+    "required": [
+        "code",
+        "message",
+        "data"
+    ]
+}
