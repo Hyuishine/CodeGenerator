@@ -1,8 +1,8 @@
 /*
  * @Author: 黄宇/hyuishine
  * @Date: 2020-05-12 15:17:17
- * @LastEditors: 黄宇/hyuishine
- * @LastEditTime: 2021-04-12 16:06:32
+ * @LastEditors: 黄宇/Hyuishine
+ * @LastEditTime: 2021-07-27 14:23:57
  * @Description:
  * @Email: hyuishine@gmail.com
  * @Company: 3xDate
@@ -16,7 +16,7 @@ Vue.use(Router)
 const routes = [
   {
     path: '/',
-    redirect: '/index',
+    redirect: '/yapi',
     // meta: {
     //   requireAuth: true
     // },
@@ -31,7 +31,7 @@ const routes = [
           keyWords: 'excel导表生成',
           description: 'excel导表生成'
         },
-        component: resolve => require(['@/view/excelGenerator/index'], resolve)
+        component: resolve => require(['@/view/GFT-generator/index'], resolve)
       },
       {
         // yapi生成
