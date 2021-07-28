@@ -2,95 +2,198 @@
  * @Author: 黄宇/hyuishine
  * @Date: 2021-04-12 15:55:33
  * @LastEditors: 黄宇/Hyuishine
- * @LastEditTime: 2021-07-27 15:15:39
+ * @LastEditTime: 2021-07-28 15:43:21
  * @Description:
  * @Email: hyuishine@gmail.com
  * @Company: 3xData
  * @youWant: add you want
 -->
 <template>
-  <h1>123</h1>
+  <v-container>
+    <v-row>
+      <!-- 输入文本域，在此输入sql -->
+      <v-col cols="12">
+        <v-textarea solo
+                    name="input-7-4"
+                    label="在此输入SQL"
+                    v-model="txt_area"></v-textarea>
+      </v-col>
+      <!-- 生成按钮 -->
+      <v-col align-self="center"
+             cols="2">
+        <v-btn color="primary"
+               @click="btn_create()">
+          生成
+        </v-btn>
+      </v-col>
+      <v-col>
+        <v-switch v-model="yapi_type"
+                  :label="yapi_type ? '当前生成为：列表' : '当前生成为：表单'"></v-switch>
+      </v-col>
+      <!-- 展示生成之后的yapi数据 -->
+      <v-col cols="12">
+        <v-card>
+          <v-card-title>生成的yapi Json：</v-card-title>
+          <v-card-text>{{ txt_card }}</v-card-text>
+        </v-card>
+      </v-col>
+      <!-- 错误数据 -->
+      <v-col>
+        <v-card>
+          <v-card-title>错误数据：</v-card-title>
+          <v-card-text>
+            <h2 v-for="(errInfo,i) in sql_errorItems"
+                :key="i">
+              {{ 'Sql第' + errInfo.rowIndex + '个字段，错误：' + errInfo.desc }}
+            </h2>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 <script>
+import listTemplate from './template/list'
+import formTemplate from './template/form'
 export default {
   data () {
     return {
-      yapiAccount: {
+      // 文本域输入的,在卡片上展示的生成的数据
+      txt_area: '',
+      txt_card: '',
+
+      // 生成那种yapi？true列表 - 表单；yapi账号；生成的yapi表单；生成的yapi列表
+      yapi_type: false,
+      yapi_Account: {
         email: process.env.YAPI_USER,
         password: process.env.YAPI_PWD
       },
-      // key值，该值描述
-      keyArr: ['id', 'remarks', 'name'],
-      descriptionArr: ['主键', '备注', '名称'],
-      // yapi 标准表单模板
-      formTemplate: {
-        $schema: 'http://json-schema.org/draft-04/schema#',
-        type: 'object',
-        required: ['code', 'message', 'data'], // 该层级下必反的数据
-        properties: { // 子项数据
-          code: { // 状态码
-            type: 'number', // 类型
-            description: '状态码', // 描述、备注
-            mock: {
-              mock: '200' // 写死值
-            }
-          },
-          message: { // 提示信息
-            type: 'string',
-            mock: {
-              mock: 'success'
-            }
-          },
-          data: { // 数据
-            type: 'object',
-            required: ['formObject'],
-            properties: {
-              formObject: {
-                type: 'object',
-                required: [],
-                properties: {
-                  // keyArr: { // key值
-                  //   type: 'string',
-                  //   description: 'descriptionArr' 描述
-                  // }
-                }
-              }
-            }
-          }
-        }
-      }
+      yapi_formData: {},
+      yapi_listData: {},
+
+      // sql字段描述行,错误的sql,sql字段英文名，sql字段中文名/备注/描述
+      sql_items: [],
+      sql_errorItems: [],
+      sql_keyArr: [],
+      sql_comment: []
     }
   },
   mounted () {
-    this.createProperties()
+    this.yapi_formData = formTemplate
+    this.yapi_listData = listTemplate
   },
   methods: {
     // 调取yapi登录接口
     yapi_login () {
-      this.$axios['yapi_login'](this.yapiAccount).then(data => {
+      this.$axios['yapi_login'](this.yapi_Account).then(data => {
         console.log(data)
       })
     },
     // 创建yapi
     createProperties () {
-      if (this.keyArr.length === this.descriptionArr.length) {
-        // 临时存放生成的数据
-        let formItem = {}
-        let requiredArr = []
-        // 生成表单项，键值-类型-备注
-        this.keyArr.forEach((key, i) => {
-          // 创建表单项
-          formItem[key] = {
-            type: 'string',
-            description: this.descriptionArr[i]
-          }
-          // 创建必定返回的表单项
-          requiredArr.push(key)
-        })
-        // 将生成的 表单项数据 和 必定要反的表单项数据 插入到yapi表单模板中,
-        this.formTemplate.properties.data.properties.formObject.properties = formItem
-        this.formTemplate.properties.data.properties.formObject.required = requiredArr
+      let yapiData = {}
+      let requiredArr = []
+      // 生成表单项，键值-类型-备注
+      this.sql_keyArr.forEach((key, i) => {
+        // 创建表单项
+        yapiData[key] = {
+          type: 'string',
+          description: this.sql_comment[i]
+        }
+        // 创建必定返回的表单项
+        requiredArr.push(key)
+      })
+      // true 是列表，false是表单
+      if (this.yapi_type) {
+        this.yapi_listData.properties.data.properties.rows.items.properties = yapiData
+        this.yapi_listData.properties.data.properties.rows.items.required = requiredArr
+        this.txt_card = this.yapi_listData
+      } else {
+        this.yapi_formData.properties.data.properties.formObject.properties = yapiData
+        this.yapi_formData.properties.data.properties.formObject.required = requiredArr
+        this.txt_card = this.yapi_formData
       }
+    },
+    // 生成按钮点击事件
+    btn_create () {
+      /* 获取导出的sql语句中,通过观察SQL语句，我们可以发现：
+        表的开头为create XXXX表 接一个“(”
+        表的结束为申明主键：“primary key (XXX值)”
+        表的每个字段为一行，每行结束以“,”结尾。
+        每行的结构为：字段名、字段类型、字段描述/备注
+        字段名在前，类型在中，描述以 “comment”开始，以单引号包裹，那么就只需要去除comment'XXX'，再去除类型(类型固定)，就能拿到字段英文名
+      */
+      this.sql_errorItems = []
+      // sql数据开始、结束的index值，sql内容字段行
+      let start = this.txt_area.indexOf('(') + 1
+      let end = this.txt_area.indexOf('primary key')
+      this.sql_items = this.txt_area.slice(start, end).trim().split(',')
+
+      let tempNames = []
+      let tempComments = []
+      this.sql_items.forEach((row, i) => {
+        if (row !== '') {
+          tempNames.push(this.itemName(row.trim(), i))
+          tempComments.push(this.itemComment(row.trim(), i))
+        }
+      })
+
+      this.sql_keyArr = tempNames
+      this.sql_comment = tempComments
+
+      this.createProperties()
+    },
+
+    // 判断字段名，通过传入SQL描述字段的行，
+    // 返回字段名
+    itemName (itemRow, i) {
+      try {
+        // 经过观察，发现字段名后面会有空格，前面传入的时候已经做了trim，所以在第一个空格前就是字段名
+        const end = itemRow.indexOf(' ')
+        let name = itemRow.slice(0, end).replaceAll('"', '')
+
+        // 存在下划线，去除下划线，后第一个字母转转驼峰
+        if (name.indexOf('_') !== -1) {
+          let upperIndex = name.indexOf('_')
+          name = name.replace('_', '')
+          name = name.split('')
+          name[upperIndex] = name[upperIndex].toUpperCase()
+          name = name.join().replaceAll(',', '')
+        }
+        return name
+      } catch (error) {
+        //! 补空
+        this.itemError(i, '字段英文名写错了')
+        return '字段英文名写错了'
+      }
+    },
+    // 判断字段类型，通过传入 SQL描述字段的行，
+    // 返回字段类型
+    itemType (itemRow, i) {
+
+    },
+    // 判断字段类型，通过传入 SQL描述字段的行，
+    // 返回字段描述/备注
+    itemComment (itemRow, i) {
+      try {
+        // 经过观察，发现备注前面会有comment，且备注在行末，且以单引号扩起
+        const start = itemRow.indexOf('comment') + 7
+        let comment = itemRow.slice(start, itemRow.length).trim().replaceAll("'", '')
+        return comment
+      } catch (error) {
+        //! 补空
+        this.itemError(i, '字段缺少描述/备注')
+        return ' '
+      }
+    },
+    // 记录错误
+    itemError (rowIndex, desc) {
+      this.sql_errorItems.push(
+        {
+          rowIndex: rowIndex,
+          desc: desc
+        }
+      )
     }
   }
 }
