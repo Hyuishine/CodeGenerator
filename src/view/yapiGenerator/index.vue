@@ -2,7 +2,7 @@
  * @Author: 黄宇/hyuishine
  * @Date: 2021-04-12 15:55:33
  * @LastEditors: 黄宇/Hyuishine
- * @LastEditTime: 2021-07-28 16:25:46
+ * @LastEditTime: 2021-07-28 17:55:16
  * @Description:
  * @Email: hyuishine@gmail.com
  * @Company: 3xData
@@ -14,7 +14,6 @@
       <!-- 输入文本域，在此输入sql -->
       <v-col cols="12">
         <v-textarea solo
-                    name="input-7-4"
                     label="在此输入SQL"
                     v-model="txt_area"></v-textarea>
       </v-col>
@@ -22,7 +21,8 @@
       <v-col align-self="center"
              cols="2">
         <v-btn color="primary"
-               @click="btn_create()">
+               @click="btn_create()"
+               :disabled="txt_area.length === 0">
           生成
         </v-btn>
       </v-col>
