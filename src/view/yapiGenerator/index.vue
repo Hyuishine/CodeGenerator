@@ -2,7 +2,7 @@
  * @Author: 黄宇/hyuishine
  * @Date: 2021-04-12 15:55:33
  * @LastEditors: 黄宇/Hyuishine
- * @LastEditTime: 2021-07-28 16:09:44
+ * @LastEditTime: 2021-07-28 16:25:46
  * @Description:
  * @Email: hyuishine@gmail.com
  * @Company: 3xData
@@ -31,7 +31,8 @@
                   :label="yapi_type ? '当前生成为：列表' : '当前生成为：表单'"></v-switch>
       </v-col>
       <v-col cols="12">
-        <v-expansion-panels multiple>
+        <v-expansion-panels multiple
+                            v-model="panelStatus">
           <!-- 展示生成之后的yapi数据 -->
           <v-expansion-panel>
             <v-expansion-panel-header>生成的yapi Json：</v-expansion-panel-header>
@@ -93,7 +94,9 @@ export default {
       sql_items: [],
       sql_errorItems: [],
       sql_keyArr: [],
-      sql_comment: []
+      sql_comment: [],
+
+      panelStatus: []
     }
   },
   mounted () {
@@ -131,6 +134,7 @@ export default {
         this.yapi_formData.properties.data.properties.formObject.required = requiredArr
         this.txt_card = this.yapi_formData
       }
+      this.panelStatus = [0, 1]
     },
     // 生成按钮点击事件
     btn_create () {
