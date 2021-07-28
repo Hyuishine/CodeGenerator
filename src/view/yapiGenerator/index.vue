@@ -2,7 +2,7 @@
  * @Author: 黄宇/hyuishine
  * @Date: 2021-04-12 15:55:33
  * @LastEditors: 黄宇/Hyuishine
- * @LastEditTime: 2021-07-28 15:43:21
+ * @LastEditTime: 2021-07-28 16:09:44
  * @Description:
  * @Email: hyuishine@gmail.com
  * @Company: 3xData
@@ -30,24 +30,42 @@
         <v-switch v-model="yapi_type"
                   :label="yapi_type ? '当前生成为：列表' : '当前生成为：表单'"></v-switch>
       </v-col>
-      <!-- 展示生成之后的yapi数据 -->
       <v-col cols="12">
-        <v-card>
-          <v-card-title>生成的yapi Json：</v-card-title>
-          <v-card-text>{{ txt_card }}</v-card-text>
-        </v-card>
-      </v-col>
-      <!-- 错误数据 -->
-      <v-col>
-        <v-card>
-          <v-card-title>错误数据：</v-card-title>
-          <v-card-text>
-            <h2 v-for="(errInfo,i) in sql_errorItems"
-                :key="i">
-              {{ 'Sql第' + errInfo.rowIndex + '个字段，错误：' + errInfo.desc }}
-            </h2>
-          </v-card-text>
-        </v-card>
+        <v-expansion-panels multiple>
+          <!-- 展示生成之后的yapi数据 -->
+          <v-expansion-panel>
+            <v-expansion-panel-header>生成的yapi Json：</v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <v-card>
+                <v-card-text>{{ txt_card }}</v-card-text>
+              </v-card>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+          <!-- 错误数据 -->
+          <v-expansion-panel>
+            <!-- 标题 -->
+            <v-expansion-panel-header disable-icon-rotate>
+              错误数据：
+              <template v-slot:actions>
+                <!-- 当有错误数据时，标红 -->
+                <v-icon :color="sql_errorItems.length ? 'error' : 'info'">
+                  mdi-alert-circle
+                </v-icon>
+              </template>
+            </v-expansion-panel-header>
+            <!-- 详细错误内容 -->
+            <v-expansion-panel-content>
+              <v-card>
+                <v-card-text>
+                  <h2 v-for="(errInfo,i) in sql_errorItems"
+                      :key="i">
+                    {{ 'Sql第' + errInfo.rowIndex + '个字段，错误：' + errInfo.desc }}
+                  </h2>
+                </v-card-text>
+              </v-card>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
       </v-col>
     </v-row>
   </v-container>
