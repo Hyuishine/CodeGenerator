@@ -1,8 +1,8 @@
 <!--
  * @Author: 黄宇/hyuishine
  * @Date: 2020-05-12 15:17:17
- * @LastEditors: 黄宇/hyuishine
- * @LastEditTime: 2020-11-11 21:05:21
+ * @LastEditors: 黄宇/Hyuishine
+ * @LastEditTime: 2021-07-28 15:19:08
  * @Description:
  * @Email: hyuishine@gmail.com
  * @Company: 3xDate
@@ -23,7 +23,7 @@ export default {
 <style>
 /* 定义的全局css 例如背景色、字体色 方便以后快速更改和 切换主题 */
 html {
-  overflow: hidden;
+  overflow: hidden auto;
 }
 * {
   margin: 0;
@@ -40,6 +40,6 @@ a:hover {
 }
 body {
   background-color: var(--bgColor-black);
-  overflow: hidden;
+  overflow: hidden auto;
 }
 </style>
