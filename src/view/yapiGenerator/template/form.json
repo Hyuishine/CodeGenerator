@@ -6,22 +6,21 @@
     "message",
     "data"
   ],
-  // 该层级下必反的数据
-  "properties": { // 子项数据
-    "code": { // 状态码
-      "type": "number", // 类型
-      "description": "状态码", // 描述、备注
+  "properties": {
+    "code": {
+      "type": "number",
+      "description": "状态码",
       "mock": {
-        "mock": "200" // 写死值
+        "mock": "200"
       }
     },
-    "message": { // 提示信息
+    "message": {
       "type": "string",
       "mock": {
         "mock": "success"
       }
     },
-    "data": { // 数据
+    "data": {
       "type": "object",
       "required": [
         "formObject"
@@ -30,12 +29,7 @@
         "formObject": {
           "type": "object",
           "required": [],
-          "properties": {
-            // keyArr: { // key值
-            //   "type": "string",
-            //   description: "descriptionArr" 描述
-            // }
-          }
+          "properties": {}
         }
       }
     }
