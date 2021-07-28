@@ -1,8 +1,8 @@
 <!--
  * @Author: 黄宇/hyuishine
  * @Date: 2020-12-09 22:44:42
- * @LastEditors: 黄宇/hyuishine
- * @LastEditTime: 2021-04-11 16:01:52
+ * @LastEditors: 黄宇/Hyuishine
+ * @LastEditTime: 2021-07-27 17:00:16
  * @Description:
  * @Email: hyuishine@gmail.com
  * @Company: 3xData
@@ -16,7 +16,6 @@
         <v-flex id="viewBox">
           <v-layout flex
                     justify-space-between
-                    row
                     wrap>
             <v-row align="center"
                    justify="center">
