@@ -1,8 +1,8 @@
 /*
  * @Author: 黄宇/hyuishine
  * @Date: 2020-05-12 15:17:17
- * @LastEditors: 黄宇/Hyuishine
- * @LastEditTime: 2021-07-27 14:23:57
+ * @LastEditors: 黄宇/hyuishine
+ * @LastEditTime: 2021-08-01 14:34:36
  * @Description:
  * @Email: hyuishine@gmail.com
  * @Company: 3xDate
@@ -16,14 +16,14 @@ Vue.use(Router)
 const routes = [
   {
     path: '/',
-    redirect: '/yapi',
+    redirect: '/doc',
     // meta: {
     //   requireAuth: true
     // },
     component: resolve => require(['@/view/layout'], resolve),
     children: [
       {
-        // 导表申城
+        // 赣服通导表生成
         path: '/index',
         name: 'index',
         meta: {
@@ -42,7 +42,18 @@ const routes = [
           keyWords: 'yapi生成',
           description: 'yapi生成'
         },
-        component: resolve => require(['@/view/yapiGenerator/index'], resolve)
+        component: resolve => require(['@/view/yapi-generator/index'], resolve)
+      },
+      {
+        // 开发文档生成
+        path: '/doc',
+        name: 'doc',
+        meta: {
+          zhName: '开发文档',
+          keyWords: '文档、word',
+          description: '通过开发文档快速生成前端代码'
+        },
+        component: resolve => require(['@/view/doc-generator/index'], resolve)
       }
     ]
   }
