@@ -1,8 +1,8 @@
 <!--
  * @Author: 黄宇/hyuishine
  * @Date: 2020-12-09 23:33:07
- * @LastEditors: 黄宇/hyuishine
- * @LastEditTime: 2020-12-27 17:23:54
+ * @LastEditors: 黄宇/Hyuishine
+ * @LastEditTime: 2021-08-04 15:50:12
  * @Description:
  * @Email: hyuishine@gmail.com
  * @Company: 3xData
@@ -21,6 +21,7 @@
         {{ title }}
       </v-stepper-step>
     </v-stepper-header>
+    <!-- 动态步骤 -->
     <v-stepper-items>
       <template v-for="(path,index) in stepData.path">
         <v-stepper-content :step="index + 1"
