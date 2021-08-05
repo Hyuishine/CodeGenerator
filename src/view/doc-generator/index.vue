@@ -3,7 +3,7 @@
  * @Author: 黄宇/hyuishine
  * @Date: 2021-08-01 14:24:38
  * @LastEditors: 黄宇/Hyuishine
- * @LastEditTime: 2021-08-05 14:47:31
+ * @LastEditTime: 2021-08-05 16:44:48
  * @Description:
  * @Email: hyuishine@gmail.com
  * @Company: 3xData
@@ -82,6 +82,16 @@ export default {
         this.stepData.path.push(moduleObj[stepName])
       }
     })
+  },
+  watch: {
+    // 当步骤改变时，下发事件总线，步骤更改事件，返回当前步骤
+    currentStep: {
+      handler (n) {
+        this.$bus.$emit('stepsAdd', n)
+      },
+      deep: true,
+      immediate: true
+    }
   }
 }
 </script>
