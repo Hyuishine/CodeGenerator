@@ -2,7 +2,7 @@
  * @Author: 黄宇/Hyuishine
  * @Date: 2021-08-04 14:59:01
  * @LastEditors: 黄宇/Hyuishine
- * @LastEditTime: 2021-08-05 14:02:09
+ * @LastEditTime: 2021-08-05 15:05:09
  * @Description:
  * @Email: hyuishine@gmail.com
  * @Company: 3xData
@@ -43,6 +43,11 @@ export default {
             })
             .done()
         })
+      } else {
+        // 清空文件后 重载数据
+        this.$store.state.module.htmlDom = '暂无数据'
+        this.$store.state.module.moduleName = []
+        this.$store.state.module.moduleDom = []
       }
     },
     // 将文件格式转换为 arrayBuffer
