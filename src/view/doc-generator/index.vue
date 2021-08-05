@@ -3,14 +3,14 @@
  * @Author: 黄宇/hyuishine
  * @Date: 2021-08-01 14:24:38
  * @LastEditors: 黄宇/Hyuishine
- * @LastEditTime: 2021-08-04 15:48:54
+ * @LastEditTime: 2021-08-05 14:47:31
  * @Description:
  * @Email: hyuishine@gmail.com
  * @Company: 3xData
  * @youWant: add you want
 -->
 <template>
-  <v-card>
+  <v-card style="margin-top:5vh;">
 
     <!-- 步骤标题 -->
     <v-card-title class="text-h6 font-weight-regular justify-space-between">
@@ -18,9 +18,11 @@
     </v-card-title>
 
     <!-- 步骤 动态组件 -->
-    <v-window v-model="currentStep">
+    <v-window v-model="currentStep"
+              class="stepContainer">
+
       <component :is="path"
-                 v-for="(path,i) in   stepData.path"
+                 v-for="(path,i) in stepData.path"
                  :key="i"></component>
     </v-window>
 
@@ -37,7 +39,7 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn :disabled="currentStep === 3"
+      <v-btn :disabled="currentStep > stepData.path "
              color="primary"
              depressed
              @click="currentStep++">
@@ -70,7 +72,7 @@ export default {
     }
   },
   created () {
-    let step = ['docUpload']
+    let step = ['docUpload', 'htmlView', 'moduleView']
 
     step.forEach(stepName => {
       // 当步骤库中存在定义的步骤，则按定义的步骤顺序存放步骤组件
@@ -83,3 +85,10 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.stepContainer {
+  max-height: 70vh;
+  max-width: calc(100vw - 24px);
+  overflow: auto;
+}
+</style>
