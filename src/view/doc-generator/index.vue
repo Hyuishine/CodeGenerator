@@ -3,7 +3,7 @@
  * @Author: 黄宇/hyuishine
  * @Date: 2021-08-01 14:24:38
  * @LastEditors: 黄宇/Hyuishine
- * @LastEditTime: 2021-08-05 16:44:48
+ * @LastEditTime: 2021-11-18 00:52:52
  * @Description:
  * @Email: hyuishine@gmail.com
  * @Company: 3xData
@@ -39,11 +39,11 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn :disabled="currentStep > stepData.path "
-             color="primary"
+      <v-btn color="primary"
              depressed
-             @click="currentStep++">
-        下一步
+             :loading="loading"
+             @click="nextStep()">
+        {{ currentStep === 3 ?  '生成' : '下一步' }}
       </v-btn>
     </v-card-actions>
 
@@ -68,11 +68,12 @@ export default {
       stepData: {
         title: [], // 标题数据
         path: [] // 动态组件可以：is使用的 路径
-      }
+      },
+      loading: false
     }
   },
   created () {
-    let step = ['docUpload', 'htmlView', 'moduleView']
+    let step = ['docUpload', 'htmlView', 'moduleView', 'codeGenerating']
 
     step.forEach(stepName => {
       // 当步骤库中存在定义的步骤，则按定义的步骤顺序存放步骤组件
@@ -82,6 +83,16 @@ export default {
         this.stepData.path.push(moduleObj[stepName])
       }
     })
+  },
+  methods: {
+    nextStep () {
+      if (this.currentStep < 3) {
+        this.currentStep++
+      } else {
+        this.loading = true
+        window.open('/static/index.zip')
+      }
+    }
   },
   watch: {
     // 当步骤改变时，下发事件总线，步骤更改事件，返回当前步骤
